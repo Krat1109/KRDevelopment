@@ -1,0 +1,55 @@
+<aura:component controller="eventRelatedPotentialContactsCtrl" implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome" access="global" >
+    
+    <!-- attributes -->
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="orgUrl" type="String" />
+    <aura:attribute name="sortedBy"
+                type="String"/>
+    <aura:attribute name="sortedDirection"
+                type="String" />
+    
+
+	<aura:attribute name="noResults" type="String">
+    </aura:attribute>
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+  <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}"/>
+
+ 
+  <div class="slds-p-around--large">
+    <h1 style="font-size:25px;">
+        <a href="" onclick="{!c.handleEventHome}" type="url" target="_blank">Events</a> > <a href="" onclick="{!c.hanldeEventClick}" target="_blank">{!v.data.eventName}</a></h1> 
+    <br/>
+    <p>{!v.data.count} items 
+        <p hidden="true" >{!v.orgUrl}</p>
+    </p>
+    <br/> 
+  <!--   the container element determine the height of the datatable -->
+     <article aura:id="gridContainer" class="slds-card slds-card_boundary">
+        <lightning:card title="Potential Contacts" iconName="standard:contact">
+            <div class="slds-card__header slds-grid">
+                <aura:if isTrue="{!not(empty(v.data.relatedPContacts))}" >
+                    <!-- the container element determine the height of the datatable -->
+                    <lightning:datatable
+                        keyField="id"
+                        data="{! v.data.relatedPContacts }"
+                        columns="{! v.columns }"
+                        onrowaction="{! c.handleRowAction}"
+                        onload="{! c.refresh}"
+                        hideCheckboxColumn="true"
+                        Label="Contacts"
+                        onsort="{!c.updateColumnSorting}"
+                        sortedBy="{!v.sortedBy}"
+                        sortedDirection="{!v.sortedDirection}"/>
+                </aura:if>
+                <aura:if isTrue="{!empty(v.data.relatedPContacts)}" >
+                    <p>{!v.noResults}</p>
+                </aura:if>
+            </div>
+    </lightning:card>
+    </article> 
+   
+ </div>
+</aura:component>
