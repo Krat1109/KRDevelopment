@@ -10,14 +10,12 @@
     <aura:attribute name="sortedDirection"
                 type="String" />
     
-
 	<aura:attribute name="noResults" type="String">
     </aura:attribute>
     <!-- handlers-->
     <aura:handler name="init" value="{! this }" action="{! c.init }"/>
   <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}"/>
 
- 
   <div class="slds-p-around--large">
     <h1 style="font-size:25px;">
         <a href="" onclick="{!c.handleEventHome}" type="url" target="_blank">Events</a> > <a href="" onclick="{!c.hanldeEventClick}" target="_blank">{!v.data.eventName}</a></h1> 
